@@ -1,0 +1,19 @@
+﻿# Render Blueprint (example)
+# You will set environment variables in Render dashboard (no secrets committed).
+services:
+  - type: web
+    name: Mylearn-go-go-web
+    env: node
+    plan: free
+    buildCommand: cd apps/web && npm install && npm run build
+    startCommand: cd apps/web && npm run start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NEXT_PUBLIC_APP_NAME
+        value: "Mylearn-go-go"
+      # Add Supabase values in Render dashboard:
+      # NEXT_PUBLIC_SUPABASE_URL
+      # NEXT_PUBLIC_SUPABASE_ANON_KEY
+      # SUPABASE_SERVICE_ROLE_KEY (server-only usage)

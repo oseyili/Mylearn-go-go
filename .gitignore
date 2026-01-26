@@ -1,0 +1,24 @@
+﻿# dependencies
+node_modules/
+
+# next
+.next/
+out/
+dist/
+
+# env (never commit secrets)
+.env
+.env.*
+!.env.example
+
+# logs/temp
+logs/
+tmp/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Supabase local
+.supabase/
