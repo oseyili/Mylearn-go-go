@@ -1,0 +1,33 @@
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
+
+export default async function DashboardPage() {
+  const cookieStore = cookies();
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll: () => cookieStore.getAll(),
+        setAll: () => {},
+      },
+    }
+  );
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  return (
+    <main className="mx-auto max-w-3xl p-6 space-y-4">
+      <h1 className="text-3xl font-bold">Dashboard</h1>
+      <p className="opacity-80">Welcome, {user.email}</p>
+    </main>
+  );
+}
