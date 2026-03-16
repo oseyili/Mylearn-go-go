@@ -21,7 +21,6 @@ export default async function DashboardPage() {
 
   console.log("[dashboard] user:", user.id, user.email);
 
-  // Auto-create profile row on first login
   await ensureProfile(supabase);
 
   return (
@@ -29,8 +28,7 @@ export default async function DashboardPage() {
       <h1 className="text-3xl font-bold">Dashboard</h1>
       <p className="opacity-80">Welcome, {user.email}</p>
       <p className="text-sm opacity-70">
-        Profile auto-check ran. Open Supabase Table Editor → profiles to confirm
-        your row exists.
+        Your profile is stored in Supabase and courses are ready to use.
       </p>
     </main>
   );

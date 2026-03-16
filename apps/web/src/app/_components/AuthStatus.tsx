@@ -20,6 +20,7 @@ export default function AuthStatus() {
 
   async function logout() {
     await supabase.auth.signOut();
+    window.location.href = "/";
   }
 
   return (

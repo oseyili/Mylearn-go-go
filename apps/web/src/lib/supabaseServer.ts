@@ -10,7 +10,7 @@ export async function supabaseServer() {
     {
       cookies: {
         getAll: () => cookieStore.getAll(),
-        setAll: () => {}, // server components can be read-only
+        setAll: () => {},
       },
     }
   );

@@ -9,25 +9,15 @@ export async function ensureProfile(supabase: SupabaseClient) {
   if (userError) throw userError;
   if (!user) return null;
 
-  // Check if profile exists
-  const { data: existing, error: selectError } = await supabase
-    .from("profiles")
-    .select("id")
-    .eq("id", user.id)
-    .maybeSingle();
+  const { error } = await supabase.from("profiles").upsert(
+    {
+      id: user.id,
+      email: user.email,
+      full_name: user.user_metadata?.full_name ?? null,
+    },
+    { onConflict: "id" }
+  );
 
-  if (selectError) throw selectError;
-
-  if (existing) return user;
-
-  // Create profile
-  const { error: insertError } = await supabase.from("profiles").insert({
-    id: user.id,
-    email: user.email,
-    full_name: user.user_metadata?.full_name ?? null,
-  });
-
-  if (insertError) throw insertError;
-
+  if (error) throw error;
   return user;
 }
